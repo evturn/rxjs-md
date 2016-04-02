@@ -52,3 +52,27 @@ Two Observables are created from the original, `allMoves`. These specialized Obs
 
 ##### Note: Observables are immutable, and every operator applied to them creates a new Observable.
 
+### Observables from Callback Functions
+
+Callbacks can be transformed into Observables using two functions, `fromCallback` and `fromNodeCallback`.
+
+`fromNodeCallback` creates Observables specifically from Node.js-style (error first) callbacks.
+
+Node's `fs.readdir` accepts a directory path and a callback function which is called once the contents are retrieved.
+
+Here an Observable is created out of the `readdir` method and used without providing a callback.
+
+```javascript
+const Rx = require('rx');
+const fs = require('fs');
+
+const readdir = Rx.Observable.fromNodeCallback(fs.readdir);
+const source = readdir('/Users/tyrone');
+const subscription = source.subscribe(
+  res => console.log('List of directories: ' + res), 
+  err => console.log('Error: ' + err),
+  ()  => console.log('Done!')
+);
+```
+
+This now returns an Observable that will properly use `onNext`, `onError`, and `onCompleted` when we subscribe an Observer to it.
