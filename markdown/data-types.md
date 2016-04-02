@@ -25,3 +25,30 @@ Rx.Observable
 ```
 
 `from`, along with `fromEvent`, is one of the most frequently used RxJS operators.
+
+### Observables from Events
+
+When an event is transformed into an Observable it becomes a first-class value that can be combined and passed around.
+
+Transforming an event into an Observable unleashes the event from its natural constraints.
+
+```javascript
+const allMoves = Rx.Observable.fromEvent(document, 'mousemove'); 
+
+allMoves.subscribe(e => console.log(e.clientX, e.clientY));
+```
+
+One can create new Observables based on the original Observables which are independent and can be used for different tasks.
+
+```javascript
+const movesOnTheRight = allMoves.filter(e => e.clientX > window.innerWidth / 2);
+const movesOnTheLeft = allMoves.filter(e => e.clientX < window.innerWidth / 2);
+
+movesOnTheRight.subscribe(e => console.log('Mouse is on the right', e.clientX));
+movesOnTheLeft.subscribe(e => console.log('Mouse is on the left', e.clientX));
+```
+
+Two Observables are created from the original, `allMoves`. These specialized Observables contain only filtered items from the original one and neither of modify the original while `allMoves` will keep emitting all mouse moves.
+
+##### Note: Observables are immutable, and every operator applied to them creates a new Observable.
+
