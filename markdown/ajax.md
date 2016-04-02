@@ -1,5 +1,3 @@
-## RxJS
-
 ### Ajax and an Observable
 
 This `get` function wraps the `XMLHttpRequest` object using `Rx.Observable.create` and if successful, emits its contents and completes the sequence (the Observable will only ever emit one result). Otherwise, it emits an error.
@@ -66,6 +64,3 @@ Rx.DOM.get('/api/contents.json').subscribe(
 ```
 
 The `onCompleted` callback is omitted because we know that it will yield only one result and we are already using it in the `onNext` callback.
-
-
-

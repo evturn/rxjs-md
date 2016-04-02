@@ -1,5 +1,3 @@
-## RxJS
-
 ### Creating Observables
 
  The create operator in the Rx.Observable object takes a callback that accepts an Observer as a parameter. That function defines how the Observable will emit values
