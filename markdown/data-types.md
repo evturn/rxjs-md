@@ -23,3 +23,5 @@ Rx.Observable
     ()  => console.log('Completed')
   );
 ```
+
+`from`, along with `fromEvent`, is one of the most frequently used RxJS operators.
