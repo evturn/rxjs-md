@@ -26,4 +26,6 @@ The marble diagram for the `merge` operator:
 
 ![image](https://github.com/evturn/rxjs-md/blob/master/assets/images/002.png)
 
-The dotted arrows along the y-axis point to the final result of the transformation applied to each element in sequences A and B.
+The dotted arrows along the y-axis point to the final result of the transformation applied to each element in sequences A and B. The resulting Observable containing the merged elements of A and B is represented by C. 
+
+##### Note: If elements of different Observables are emitted at the same time, the order of these elements in the merged sequence is random.
