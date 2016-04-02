@@ -2,7 +2,7 @@
 
 A standard visual representation for sequences, called *marble diagrams*.
 
-![image](https://github.com/evturn/rxjs-md/blob/master/assets/images/001)
+![image](https://github.com/evturn/rxjs-md/blob/master/assets/images/001.png)
 
 * A long arrow represents the an Observable over time.
 * Each circle represents a value the Observable emits by internally calling `onNext()`.
@@ -24,4 +24,6 @@ Rx.Observable.merge(a, b).subscribe(x => console.log(x));
 
 The marble diagram for the `merge` operator:
 
-![image](https://github.com/evturn/rxjs-md/blob/master/assets/images/002)
+![image](https://github.com/evturn/rxjs-md/blob/master/assets/images/002.png)
+
+The dotted arrows along the y-axis point to the final result of the transformation applied to each element in sequences A and B.
