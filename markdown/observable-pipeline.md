@@ -83,6 +83,9 @@ Observables
 * Observables don’t create intermediate Observables. 
 * Operations are applyed to each element in one go, traversed only once.
 
+
+Example using an array:
+
 ```javascript
 anArrayOfOneThousandStrings
   .map(str => str.toUpperCase()) 
@@ -97,3 +100,20 @@ The preceding executes as following:
 * Iterate through the filtered array and log each result to the console.
 
 This process iterated an array containing 1000 items three times and created two completely new arrays containing 1000 items.
+
+Example using an Observable:
+
+```javascript
+anArrayOfOneThousandStrings
+  .map(str => str.toUpperCase()) 
+  .filter(str => /^[A-Z]+$/.test(str))
+  .subscribe(str => console.log(str));
+```
+
+##### Note: Regardless of how many queries and/or transformations applied to an Observable, nothing ever happens until we subscribe to it.
+
+The preceding executes as following:
+
+* Create an uppercase function that will be applied to each item of the Observable and return an Observable that will emit these new items (whenever an Observer subscribes to it).
+* Compose a filter function with the previous uppercase function and return an Observable that will emit the new items, uppercased and filtered (yet only when an Observer is subscribed to it).
+* Trigger the Observable to emit items, going through all of them only once and applying the transformations once per item.
