@@ -45,3 +45,18 @@ const subscription = avg.subscribe(x => console.log(x));
 ```
 
 The preceding generated an incremental integer every second which called `scan` to get the average of values generated so far, every second.
+
+### `flatMap`
+
+If you have an Observable whose results are more Observables, `flatMap` will unify items in those nested Observables in a single sequence.
+
+Takes an Observable A whose elements are also Observables.
+It returns an Observable with the flattened values of A’s child Observables.
+
+Below each of the elements in A (A1, A2, A3) are also Observable sequences. Applying `flatMap` to A with a transformation function returns an Observable with all the elements from the different children of A.
+
+![image](https://github.com/evturn/rxjs-md/blob/master/assets/images/006.png)
+
+`flatMap` takes a source Observable and a function that returns a new Observable and applies that function to each element in the source Observable, like `map` does. 
+
+The difference between `map` and `flatMap` is that `map` would return an Observable that emits Observables while `flatMap` emits to the main sequence the values emitted by each new Observable, "flattening" all the Observables into one main sequence.
