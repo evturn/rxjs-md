@@ -48,8 +48,9 @@ With JS Arrays:
 
 ```javascript
 const src = [1, 2, 3, 4, 5];
-const even = src.filter(isEven);
 const isEven = val => val % 2 !== 0;
+
+const even = src.filter(isEven);
 
 even.forEach(logValue);
 ```
@@ -58,8 +59,9 @@ With Observables:
 
 ```javascript
 const src = Rx.Observable.range(1, 5);
-const even = src.filter(isEven);
 const isEven = val => val % 2 !== 0;
+
+const even = src.filter(isEven);
 
 even.subscribe(logValue);
 ```
