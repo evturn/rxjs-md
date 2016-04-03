@@ -108,3 +108,27 @@ Being that `AsyncSubject` caches the last result any subsequent subscriptions to
 Use `AsyncSubject` whenever expecting a single result that you want to hold onto.
 
 ##### Note: `AsyncSubject` represents the result of an asynchronous action and can be used to substitute for a promise.
+
+### Behavior Subject
+
+A `Behavior Subject` requires a starting value so that all Observers will always receive a value when they subscribe.
+
+An example using `BehaviorSubject` to fetch remote content:
+
+* A new `BehaviorSubject` is initialized with placeholder content. 
+* Then we subscribe to it and change the HTML body content in both `onNext` and `onError` (which depends on the result).
+* The placeholder text is now contained inside the HTML body where it will stay until a new value is emitted by the Subject .
+* Finally, the request is made and we subscribe our Subject to the resulting Observer.
+
+```javascript
+const subject = new Rx.BehaviorSubject('Please wait while content is loaded');
+
+subject.subscribe(
+  result => document.body.textContent = result.response || result,
+  error  => document.body.textContent = 'Oops, there was an error retrieving content';
+);
+
+Rx.DOM.get('/remote/content').subscribe(subject);
+```
+
+`BehaviorSubject` guarantees that there will always be at least one value emitted. Once completed no more values will be emitted, freeing the memory used by the cached value.
