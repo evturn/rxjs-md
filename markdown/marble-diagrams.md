@@ -1,4 +1,4 @@
-### Sequences
+## Marble Diagrams
 
 A standard visual representation for sequences, called *marble diagrams*.
 

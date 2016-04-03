@@ -1,4 +1,4 @@
-### Data Types
+## Observable Types
 
 In an RxJS program, one should strive to have all data in Observables, not just data that comes from asynchronous sources. 
 
