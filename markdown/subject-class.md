@@ -102,3 +102,9 @@ setTimeout(() => {
   );
 }, 5000);
 ```
+
+Being that `AsyncSubject` caches the last result any subsequent subscriptions to `products` receive the result right away.
+
+Use `AsyncSubject` whenever expecting a single result that you want to hold onto.
+
+##### Note: `AsyncSubject` represents the result of an asynchronous action and can be used to substitute for a promise.
