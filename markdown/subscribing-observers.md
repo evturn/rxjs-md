@@ -1,3 +1,5 @@
+## Subscribing Observers
+
 ### Ajax and an Observable
 
 This `get` function wraps the `XMLHttpRequest` object using `Rx.Observable.create` and if successful, emits its contents and completes the sequence (the Observable will only ever emit one result). Otherwise, it emits an error.
