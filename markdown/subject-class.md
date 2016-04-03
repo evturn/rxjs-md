@@ -109,7 +109,7 @@ Use `AsyncSubject` whenever expecting a single result that you want to hold onto
 
 ##### Note: `AsyncSubject` represents the result of an asynchronous action and can be used to substitute for a promise.
 
-### Behavior Subject
+### `Behavior Subject`
 
 A `Behavior Subject` requires a starting value so that all Observers will always receive a value when they subscribe.
 
@@ -132,3 +132,87 @@ Rx.DOM.get('/remote/content').subscribe(subject);
 ```
 
 `BehaviorSubject` guarantees that there will always be at least one value emitted. Once completed no more values will be emitted, freeing the memory used by the cached value.
+
+### `ReplaySubject`
+
+A `ReplaySubject` caches its values and re-emits them to any Observer that subscribes late to it.
+
+Unlike with `AsyncSubject`, the sequence doesn’t need to be completed for this to happen.
+
+Comparison between a `Subject` and a `ReplaySubject`:
+
+Example of a `Subject`:
+
+```javascript
+const subject = new Rx.Subject();
+
+subject.onNext(1);
+
+subject.subscribe(
+  n => console.log('Received value:', n);
+);
+
+subject.onNext(2);
+subject.onNext(3);
+// Received value: 2 
+// Received value: 3
+```
+
+Example of a `ReplaySubject`:
+
+```javascript
+const subject = new Rx.ReplaySubject();
+
+subject.onNext(1);
+
+subject.subscribe(
+  n => console.log('Received value:', n);
+);
+
+subject.onNext(2);
+subject.onNext(3);
+// Received value: 1
+// Received value: 2 
+// Received value: 3
+```
+
+`ReplaySubject` is useful to make sure that Observers get all the values emitted by an Observable from the start.
+
+This is only accomplished because `ReplaySubject` caches all values in memory. To limit the amount of data it stores  can be done by buffer size or window of time, or by passing particular parameters to the constructor.
+
+```javascript
+const subject = new Rx.ReplaySubject(2); // Buffer size of 2
+
+subject.onNext(1);
+
+subject.subscribe(
+  n => console.log('Received value:', n);
+);
+
+subject.onNext(2);
+subject.onNext(3);
+// Received value: 2 
+// Received value: 3
+```
+
+The second parameter represents the time in milliseconds during which we want to buffer values.
+
+Here we a buffer is set based on time instead of the number of values.
+
+* `ReplaySubject` caches values that were emitted up to 200 milliseconds ago.
+* Then we emit three values, each separated by 100 milliseconds.
+* Then after 350 milliseconds we subscribe an Observer and we emit yet another value.
+
+```javascript
+const subject = new Rx.ReplaySubject(null, 200); // Buffer size of 200ms
+
+setTimeout(() => subject.onNext(1), 100); 
+setTimeout(() => subject.onNext(2), 200); 
+setTimeout(() => subject.onNext(3), 400); 
+setTimeout(() => {
+  subject.subscribe(n => console.log('Received value:', n));
+  subject.onNext(4);
+}, 350);
+```
+
+ At the moment of the subscription only items 2 and 3 are cached because 1 happened too long ago (around 250 milliseconds ago).
