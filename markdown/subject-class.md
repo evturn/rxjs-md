@@ -65,6 +65,15 @@ subject.subscribe(
 
 An example using `AsyncSubject` to fetch remote content:
 
+* A function, `getProducts`, returns an Observable sequence.
+* The function creates an `AsyncSubject` and subscribes it to the Observable that `Rx.DOM.Request.get(url)` returns.
+* Then we subscribe the Observer to the `AsyncSubject`. 
+* **Every time an Observer subscribes to the Observable, that Observer will actually be subscribed to the `AsyncSubject`, which is acting as a proxy between the Observable retrieving the URL and the Observers.**
+* Then we create the Observable and store it in a `products` variable.
+* Then we subscribe to the Observable (`products`) which only then kicks off the URL retrieval and will log results when retrieved.
+* Then we make a second subscription in the `setTimeout` which runs five seconds after the first subscription. 
+* Finally, the second subsription immediately receives the result of the request has already been retrieved and stored in the AsyncSubject subject.
+
 ```javascript
 function getProducts(url) {
   let subject;
