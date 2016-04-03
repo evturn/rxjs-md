@@ -40,3 +40,25 @@ The values from the Observable come later since they are asynchronous, whereas t
 
 After one second a call to `onCompleted` on the Subject finishes the notifications to all subscriptions and overrides the `take` operator.
 
+### `AsyncSubject`
+
+Emits the last value of a sequence (only if the sequence completes) then caches it forever. Any Observer that subscribes after the value has been emitted will receive it right away. `AsyncSubject` is convenient for asynchronous operations that return a single value, such as Ajax requests.
+
+```javascript
+const delayedRange = Rx.Observable
+  .range(0, 5)
+  .delay(1000); 
+
+const subject = new Rx.AsyncSubject();
+
+delayedRange.subscribe(subject);
+subject.subscribe(
+  item => console.log('Value:', item), 
+  err  => console.log('Error:', err), 
+  ()   => console.log('Completed.');
+);
+// Value: 4 
+// Completed.
+```
+
+`delayedRange` emits the values 0 to 4 after a 1 second delay and only the last value emits.
