@@ -6,10 +6,11 @@ This `get` function wraps the `XMLHttpRequest` object using `Rx.Observable.creat
 
 ```javascript
 function get(url) {
-  return Rx.Observable.create(function(observer) {
-    var req = new XMLHttpRequest(); req.open('GET', url);
+  return Rx.Observable.create(observer => {
+    const req = new XMLHttpRequest(); 
     
-    req.onload = function() { 
+    req.open('GET', url);
+    req.onload = () => { 
       if (req.status == 200) {
         observer.onCompleted();
       } else {
@@ -17,14 +18,14 @@ function get(url) {
       }
     };
     
-    req.onerror = function() {
+    req.onerror = () => {
       observer.onError(new Error("Unknown Error"));
     };
     req.send();
   });
 }
 
-var test = get('/api/contents.json');
+const test = get('/api/contents.json');
 ```
 ##### Note: Observables don’t do anything until at least one Observer subscribes to them.
 

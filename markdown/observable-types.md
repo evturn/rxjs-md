@@ -16,7 +16,7 @@ An array-like or iterable object into an Observable by using the versatile `from
 
 ```javascript
 Rx.Observable
-  .from(['Adrià', 'Jen', 'Sergi']) 
+  .from(['Sergio', 'Tyrone', 'Choiman']) 
   .subscribe(
     x   => console.log('Next: ' + x), 
     err => console.log('Error:', err),
