@@ -27,3 +27,6 @@ getJSON(data).subscribe(
 // JSON.parse: unterminated string at line 1 column 8 of the JSON data
 ```
 
+The parsed JSON for the first result is emitted by the Observable. Then the Observable throws an exception when trying to parse the second result which the `onError` handler catches this and prints it out. 
+
+##### Note: The default behavior is that whenever an error happens, the Observable stops emitting items, and onCompleted is not called.
