@@ -26,10 +26,9 @@ At that point `map` then returns the result of dividing the sum by the count.
 
 ### `scan`
 
-The problem with logging the average of an infinite sequence in real time is that the sequence never ends.
-An aggregate operator like `reduce` will never call its Observers’ `onNext` operator.
-
 The `scan` operator acts like `reduce` but emits each intermediate result allowing us to aggregate sequences that take a long time to complete or are infinite.
+
+`scan` solves the problem of logging data from an infinite sequence in real time. An aggregate operator like `reduce` will never call its Observers’ `onNext` operator.
 
 ```javascript
 const initialValue = { sum: 0, count: 0 };
