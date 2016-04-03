@@ -62,3 +62,34 @@ subject.subscribe(
 ```
 
 `delayedRange` emits the values 0 to 4 after a 1 second delay and only the last value emits.
+
+An example using `AsyncSubject` to fetch remote content:
+
+```javascript
+function getProducts(url) {
+  let subject;
+
+  return Rx.Observable.create(observer => {
+    if (!subject) {
+      subject = new Rx.AsyncSubject();
+      Rx.DOM.get(url).subscribe(subject);
+    }
+    
+    return subject.subscribe(observer);
+  });
+}
+
+const products = getProducts('/products');
+
+products.subscribe(
+  result => console.log('Result 1:', result.response),
+  error  => console.log('ERROR', error);
+);
+
+setTimeout(() => {
+  products.subscribe(
+    result => console.log('Result 2:', result.response),
+    error  => console.log('ERROR', error);
+  );
+}, 5000);
+```
