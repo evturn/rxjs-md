@@ -28,3 +28,9 @@ setTimeout(() => {
 // Subscription 1: 3 
 // Subscription 1: 4
 ```
+
+### Implicit Cancelation
+
+Most cancelations are handled implicitly.
+
+Operators such as `range` or `take` will automatically cancel the subscription when the sequence finishes or when the operator conditions are met. More advanced operators that handle several Observables in motion, such as `withLatestFrom` or `flatMapLatest`, internally create and destroy subscriptions as needed.
