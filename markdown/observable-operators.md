@@ -50,3 +50,13 @@ const subscription = source.subscribe(
 ```
 
 This example used `timeInterval` which records the time interval between consecutive values in an observable sequence.
+
+### `distinct`
+
+Default behavior: *Same as the Observable it filters*
+
+Filters out of the sequence any value that has already been emitted. This keeps from tracking previously emitted results and comparing them against incoming results.
+
+![image](https://github.com/evturn/rxjs-md/blob/master/assets/images/008.png)
+
+We pass a function that specifies the comparison method. If no arguments are passed it will use strict comparison to compare primitives such as numbers or strings, and run deep comparisons in case of more complex objects
