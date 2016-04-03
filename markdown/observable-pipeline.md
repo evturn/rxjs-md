@@ -47,7 +47,7 @@ ticksObservable.subscribe(() => console.log('Subscriber 2: ', evenTicks));
 Avoiding external state:
 
 ```javascript
-function updateDistance(acc, i)) { 
+function updateDistance(acc, i) { 
   if (i % 2 === 0) {
     acc += 1;
   }
@@ -70,3 +70,30 @@ ticksObservable.subscribe(evenTicks => console.log('Subscriber 2: ', evenTicks))
 // Subscriber 1: 2
 // Subscriber 2: 2
 ```
+
+### Array Chaining vs Observable Chaining
+
+Arrays
+
+* Array methods create a new array as a result of each operation. 
+* That new array is traversed entirely by the next operation.  
+
+Observables
+
+* Observables don’t create intermediate Observables. 
+* Operations are applyed to each element in one go, traversed only once.
+
+```javascript
+anArrayOfOneThousandStrings
+  .map(str => str.toUpperCase()) 
+  .filter(str => /^[A-Z]+$/.test(str))
+  .forEach(str => console.log(str));
+```
+
+The preceding executes as following:
+
+* Iterate through the array and create a new array with all items uppercase.
+* Iterate through the uppercase array, creating another array with 1,000 elements.
+* Iterate through the filtered array and log each result to the console.
+
+This process iterated an array containing 1000 items three times and created two completely new arrays containing 1000 items.
