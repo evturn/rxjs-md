@@ -38,3 +38,33 @@ const obs2 = Rx.Observable
   .delay(2000) 
   .flatMap(() => rangeToFive.subscribe(printValue)); // 1, 2, 3, 4, 5
 ```
+
+### Hot vs Cold
+
+`Rx.Observable.interval` which is a cold Observable emits the same sequence of values to all Observers.
+
+```javascript
+const source = Rx.Observable.interval(1000);
+
+const observer1 = source.subscribe(x => console.log('Observer 1: ' + x));
+
+setTimeout(() => {
+  const observer2 = source.subscribe(x => console.log('Observer 2: ' + x));
+}, 3000);
+
+// Observer 1: 0 
+// Observer 1: 1 
+// Observer 1: 2 
+// Observer 1: 3
+// Observer 2: 0
+// Observer 1: 4
+// Observer 2: 1
+```
+
+Instead of starting with the current value and continuing from there, Observers listening to a cold Observable will receive copies of the same sequence of values.
+
+##### Note: Even though the Observers are sharing the same Observable, they are not sharing the same *exact* sequence of values.
+
+A cold Observable emits the same sequence of values, yet depending on when certain Observers subscribe, they won't necessarily share the same sequence.
+
+In order for Observers to share the same sequence, they need to be subscribed to a hot Observable.
