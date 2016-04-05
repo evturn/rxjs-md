@@ -21,3 +21,20 @@ const subscriber2 = onMove.subscribe(e => console.log('Subscriber2:', e.clientX,
 ```
 
 Both subscribers receive the same values from the Observable as they are emitted (as would be the case with JavaScript events).
+
+### Cold Observables
+
+A cold Observable emits values only when Observers subscribe to it.
+
+```javascript
+function printValue(value) { 
+  console.log(value);
+}
+
+const rangeToFive = Rx.Observable.range(1, 5);
+
+const obs1 = rangeToFive.subscribe(printValue);      // 1, 2, 3, 4, 5
+const obs2 = Rx.Observable
+  .delay(2000) 
+  .flatMap(() => rangeToFive.subscribe(printValue)); // 1, 2, 3, 4, 5
+```
